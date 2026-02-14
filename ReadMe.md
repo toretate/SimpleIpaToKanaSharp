@@ -56,12 +56,12 @@ dotnet run --project SimpleIpaToKanaSharpCli "Apple"
 プロジェクトの品質を維持するため、2つの異なるデータセットを用いて自動テストを実施しています。
 
 ### 1. 大規模辞書テスト (alkana)
-英和辞書データを用いた大規模な変換テストです。
+bep-eng.dic から抽出された英単語を用いた大規模な変換テストです。
 
-- **総数**: 1,117 語
-- **合格**: 628 語
-- **合格率**: **56.2%**
-- **詳細**: `SimpleIpaToKanaSharp.AlkanaTests`（旧プロジェクト）の実行結果を参照。詳細は [docs/ALKANA_RESULTS.md](file:///c:/workspace/workspace-win/SimpleIpaToKanaSharp/docs/ALKANA_RESULTS.md) を参照。
+- **総数**: 1,000 語
+- **合格**: 199 語
+- **合格率**: **19.9%**
+- **詳細**: `SimpleIpaToKanaSharp.AlkanaTests` による検証結果を参照。詳細は [docs/ALKANA_RESULTS.md](docs/ALKANA_RESULTS.md) を参照。
 
 ### 2. 基本単語テスト (Standard Loanwords)
 一般的なカタカナ語（外来語）との一致を確認するテストです。
