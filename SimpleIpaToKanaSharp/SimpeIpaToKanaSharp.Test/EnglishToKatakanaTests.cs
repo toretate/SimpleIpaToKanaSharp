@@ -6,150 +6,155 @@ namespace SimpleIpaToKanaSharp.Tests
 {
     public class EnglishToKatakanaTests
     {
+        private readonly QkmaxwareIpaConverter _ipaConverter;
+        private readonly IpaToKatakana_EnglishInJapanese _kanaConverter;
+        private readonly Xunit.Abstractions.ITestOutputHelper _output;
+
+        public EnglishToKatakanaTests(Xunit.Abstractions.ITestOutputHelper output)
+        {
+            _ipaConverter = new QkmaxwareIpaConverter();
+            _kanaConverter = new IpaToKatakana_EnglishInJapanese();
+            _output = output;
+        }
         [Theory]
         // Basic Greetings & Common Words
-        [InlineData("Hello", "ハロー")] 
+        [InlineData("Hello", "ハロー")]
         [InlineData("World", "ワールド")]
         [InlineData("Good", "グッド")]
         [InlineData("Morning", "モーニング")]
         [InlineData("Night", "ナイト")]
-        [InlineData("Thank", "サンク")] 
-        [InlineData("You", "ユ")] // Standard: ユー
+        [InlineData("Thank", "サンク")]
+        [InlineData("You", "ユー")] // (Actual: ユ)
         [InlineData("Yes", "イエス")]
         [InlineData("No", "ノー")]
-        [InlineData("Please", "プリーズ")] // Standard: プリーズ
-        [InlineData("Sorry", "ソリー")] // Standard: ソーリー (Improved from サリー)
+        [InlineData("Please", "プリーズ")]
+        [InlineData("Sorry", "ソーリー")] // (Actual: ソリー)
 
         // Tech Terms
-        [InlineData("Computer", "コンピュッター")] // Standard: コンピューター (Improved from カンピュッター)
+        [InlineData("Computer", "コンピューター")] // (Actual: コンピュッター)
         [InlineData("Internet", "インターネット")]
-        [InlineData("Program", "プローグラム")] // Standard: プログラム
-        [InlineData("System", "シスタム")] // Standard: システム
-        [InlineData("Software", "ソフトウェー")] // Standard: ソフトウェア
-        [InlineData("Hardware", "ハードウェー")] // Standard: ハードウェア
-        [InlineData("Network", "ネットワーク")]
-        [InlineData("Server", "サーヴァー")] // Standard: サーバー
+        [InlineData("Program", "プログラム")] // (Actual: プローグラム)
+        [InlineData("System", "システム")] // (Actual: シスタム)
+        [InlineData("Software", "ソフトウェア")] // (Actual: ソフトゥウェー)
+        [InlineData("Hardware", "ハードウェア")] // (Actual: ハードゥウェー)
+        [InlineData("Network", "ネットワーク")] // (Actual: ネットゥワーク)
+        [InlineData("Server", "サーバー")] // (Actual: サーヴァー)
         [InlineData("Client", "クライアント")]
-        [InlineData("Data", "デイタ")] // Standard: データ
-        [InlineData("Base", "ベイス")] // Standard: ベース
-        [InlineData("Database", "デイタベイス")] // Standard: データベース
-        [InlineData("App", "アップ")] 
-        [InlineData("Application", "アップラッケイシャン")] // Standard: アプリケーション
-        [InlineData("Interface", "インターフェイス")] // Standard: インターフェース
-        [InlineData("User", "ユザー")] // Standard: ユーザー
-        [InlineData("Login", "ロギン")] // Standard: ログイン
-        [InlineData("Logout", "ロゴウット")] // Standard: ログアウト
-        [InlineData("Password", "パスワード")] // Standard: パスワード (Improved from ピャスワード)
-        [InlineData("Security", "シキュラッティー")] // Standard: セキュリティ
+        [InlineData("Data", "データ")] // (Actual: デイタ)
+        [InlineData("Base", "ベース")] // (Actual: ベイス)
+        [InlineData("Database", "データベース")] // (Actual: デイタベイス)
+        [InlineData("App", "アップ")]
+        [InlineData("Application", "アプリケーション")] // (Actual: アップラケイション)
+        [InlineData("Interface", "インターフェース")] // (Actual: インターフェイス)
+        [InlineData("User", "ユーザー")] // (Actual: ユザー)
+        [InlineData("Login", "ログイン")] // (Actual: ロギン)
+        [InlineData("Logout", "ログアウト")] // (Actual: ロゴウット)
+        [InlineData("Password", "パスワード")]
+        [InlineData("Security", "セキュリティ")] // (Actual: シキュラッティー)
         [InlineData("File", "ファイル")]
-        [InlineData("Folder", "フォールダー")] // Standard: フォルダ
-        [InlineData("Window", "ウィンドー")] // Standard: ウィンドウ
-        [InlineData("Mouse", "マース")] // Standard: マウス
-        [InlineData("Keyboard", "キボード")] // Standard: キーボード
-        [InlineData("Monitor", "モナッター")] // Standard: モニター (Improved from マナッター)
-        [InlineData("Screen", "スクリーン")] // Standard: スクリーン
+        [InlineData("Folder", "フォルダ")] // (Actual: フォールダー)
+        [InlineData("Window", "ウィンドウ")] // (Actual: ウィンドー)
+        [InlineData("Mouse", "マウス")] // (Actual: マース)
+        [InlineData("Keyboard", "キーボード")] // (Actual: キボード)
+        [InlineData("Monitor", "モニター")] // (Actual: モナッター)
+        [InlineData("Screen", "スクリーン")]
         [InlineData("Click", "クリック")]
         [InlineData("Type", "タイプ")]
         [InlineData("Code", "コード")]
         [InlineData("Bug", "バグ")]
         [InlineData("Error", "エラー")]
         [InlineData("Test", "テスト")]
-        [InlineData("Release", "リリス")] // Standard: リリース
-        [InlineData("Version", "ヴァージャン")] // Standard: バージョン
-        [InlineData("Update", "アップデイト")] // Standard: アップデート
-        [InlineData("Download", "ダーンロード")] // Standard: ダウンロード
-        [InlineData("Upload", "ウップロアッド")] // Standard: アップロード
-        [InlineData("Cloud", "クラード")] // Standard: クラウド
+        [InlineData("Release", "リリース")] // (Actual: リーリース)
+        [InlineData("Version", "バージョン")] // (Actual: ヴァージョン)
+        [InlineData("Update", "アップデート")] // (Actual: アップデイト)
+        [InlineData("Download", "ダウンロード")] // (Actual: ダーンロード)
+        [InlineData("Upload", "アップロード")] // (Actual: ウップロアッド)
+        [InlineData("Cloud", "クラウド")] // (Actual: クラード)
         [InlineData("Web", "ウェブ")]
         [InlineData("Site", "サイト")]
         [InlineData("Link", "リンク")]
-        [InlineData("Browser", "ブラーザー")] // Standard: ブラウザ
-        [InlineData("Search", "サーチ")]
-        [InlineData("Engine", "エンジャン")] // Standard: エンジン
+        [InlineData("Browser", "ブラウザ")] // (Actual: ブラーザー)
+        [InlineData("Search", "サーチ")] // (Actual: サーチュ)
+        [InlineData("Engine", "エンジン")] // (Actual: エンジョン)
         [InlineData("Tech", "テック")]
-        [InlineData("Technology", "テックノラッジー")] // Standard: テクノロジー (Improved from テックナラッジー)
-        [InlineData("Digital", "ディッジャッタル")] // Standard: デジタル
+        [InlineData("Technology", "テクノロジー")] // (Actual: テックノラッジー)
+        [InlineData("Digital", "デジタル")] // (Actual: ディジャタル)
         [InlineData("Analog", "アナログ")]
-        [InlineData("Robot", "ローボット")] // Standard: ロボット (Improved from ローバット)
-        [InlineData("AI", "アイ")] // Standard: エーアイ
+        [InlineData("Robot", "ロボット")] // (Actual: ローボット)
+        [InlineData("AI", "エーアイ")] // (Actual: アイ)
 
         // Colors
-        [InlineData("Red", "レッド")]
-        [InlineData("Blue", "ブル")] // Standard: ブルー
-        [InlineData("Green", "グリーン")] // Standard: グリーン
+        [InlineData("Red", "レッド")] // (Actual: リッド)
+        [InlineData("Blue", "ブルー")] // (Actual: ブル)
+        [InlineData("Green", "グリーン")]
         [InlineData("Yellow", "イエロー")]
         [InlineData("Black", "ブラック")]
-        [InlineData("White", "ワイト")] // Standard: ホワイト
-        [InlineData("Orange", "オランジ")] // Standard: オレンジ
-        [InlineData("Purple", "パーパル")] // Standard: パープル
+        [InlineData("White", "ホワイト")] // (Actual: ワイト)
+        [InlineData("Orange", "オレンジ")] // (Actual: オランジュ)
+        [InlineData("Purple", "パープル")] // (Actual: パープル)
         [InlineData("Pink", "ピンク")]
         [InlineData("Gold", "ゴールド")]
-        [InlineData("Silver", "シルヴァー")] // Standard: シルバー
+        [InlineData("Silver", "シルバー")] // (Actual: シルヴァー)
 
         // Animals
         [InlineData("Cat", "キャット")]
-        [InlineData("Dog", "ドグ")] // Standard: ドッグ
+        [InlineData("Dog", "ドッグ")] // (Actual: ドグ)
         [InlineData("Bird", "バード")]
         [InlineData("Fish", "フィッシュ")]
-        [InlineData("Lion", "ライアン")] // Standard: ライオン
+        [InlineData("Lion", "ライオン")] // (Actual: ライアン)
         [InlineData("Tiger", "タイガー")]
-        [InlineData("Bear", "ベー")] // Standard: ベア
-        [InlineData("Rabbit", "ラバット")] // Standard: ラビット
-        [InlineData("Monkey", "マンキー")] // Standard: モンキー
-        [InlineData("Elephant", "エラファント")] // Standard: エレファント
-        [InlineData("Box", "ボックス")]
-        [InlineData("Fox", "フォックス")]
+        [InlineData("Bear", "ベア")] // (Actual: べー)
+        [InlineData("Rabbit", "ラビット")] // (Actual: ラバット)
+        [InlineData("Monkey", "モンキー")] // (Actual: マンキー)
+        [InlineData("Elephant", "エレファント")] // (Actual: エラファント)
+        [InlineData("Box", "ボックス")] // (Actual: ボクス)
+        [InlineData("Fox", "フォックス")] // (Actual: フォクス)
 
         // Food
-        [InlineData("Apple", "アッパル")] // Standard: アップル
+        [InlineData("Apple", "アップル")] // (Actual: アプル)
         [InlineData("Banana", "バナナ")]
         // [InlineData("Orange", "オレンジ")] // Removed duplicate
-        [InlineData("Grape", "グレイプ")] // Standard: グレープ
-        [InlineData("Melon", "メラン")] // Standard: メロン
-        [InlineData("Lemon", "レマン")] // Standard: レモン
-        [InlineData("Tomato", "タメイトー")] // Standard: トマト
-        [InlineData("Potato", "パッテイトー")] // Standard: ポテト
+        [InlineData("Grape", "グレープ")] // (Actual: グレイプ)
+        [InlineData("Melon", "メロン")] // (Actual: メラン)
+        [InlineData("Lemon", "レモン")] // (Actual: レマン)
+        [InlineData("Tomato", "トマト")] // (Actual: タメイトー)
+        [InlineData("Potato", "ポテト")] // (Actual: パテイトー)
         [InlineData("Bread", "ブレッド")]
-        [InlineData("Butter", "バッター")] // Standard: バター
-        [InlineData("Cheese", "チーズ")] // Standard: チーズ
+        [InlineData("Butter", "バター")] // (Actual: バッター)
+        [InlineData("Cheese", "チーズ")]
         [InlineData("Milk", "ミルク")]
-        [InlineData("Coffee", "コフィー")] // Standard: コーヒー (Improved from カフィー)
+        [InlineData("Coffee", "コーヒー")] // (Actual: コフィー)
         [InlineData("Tea", "ティー")]
-        [InlineData("Beer", "ビール")] // Standard: ビール
+        [InlineData("Beer", "ビール")] // (Actual: ビー)
         [InlineData("Wine", "ワイン")]
-        [InlineData("Water", "ウォッター")] // Standard: ウォーター
-        [InlineData("Juice", "ジュス")] // Standard: ジュース
+        [InlineData("Water", "ウォーター")] // (Actual: ウォッター)
+        [InlineData("Juice", "ジュース")] // (Actual: ジュス)
         [InlineData("Rice", "ライス")]
-        [InlineData("Beef", "ビーフ")] // Standard: ビーフ
+        [InlineData("Beef", "ビーフ")]
         [InlineData("Pork", "ポーク")]
-        [InlineData("Chicken", "チッカン")] // Standard: チキン
-        
+        [InlineData("Chicken", "チキン")] // (Actual: チクン)
+
         // Sports
         // [InlineData("Sport", "スポーツ")]
         [InlineData("Soccer", "サッカー")]
-        [InlineData("Baseball", "ベイスボル")] // Standard: ベースボール
-        [InlineData("Basketball", "バスカットボル")] // Standard: バスケットボール (Improved from ビャスカットボル)
-        [InlineData("Tennis", "テナス")] // Standard: テニス
-        [InlineData("Golf", "ゴルフ")] // Standard: ゴルフ (Improved from ガルフ)
+        [InlineData("Baseball", "ベースボール")] // (Actual: ベイスボル)
+        [InlineData("Basketball", "バスケットボール")] // (Actual: バスカットゥボル)
+        [InlineData("Tennis", "テニス")] // (Actual: テナス)
+        [InlineData("Golf", "ゴルフ")]
         [InlineData("Ski", "スキー")]
-        [InlineData("Skate", "スケイト")] // Standard: スケート
-        [InlineData("Swim", "スウィム")] // Standard: スイム
+        [InlineData("Skate", "スケート")] // (Actual: スケイト)
+        [InlineData("Swim", "スイム")] // (Actual: スウィム)
         [InlineData("Run", "ラン")]
 
         public void Convert_WithSpecificConverters_ReturnsExpectedKana(string word, string expectedKana)
         {
-            // Allocate converters
-            var ipaConverter = new QkmaxwareIpaConverter();
-            var kanaConverter = new IpaToKatakana_EnglishInJapanese();
-
             // Convert to IPA
-            string ipa = ipaConverter.ToIpa(word);
-            
-            // Output IPA for debugging purposes (visible in test runner output)
-            Console.WriteLine($"Word: {word}, IPA: {ipa}");
+            string ipa = _ipaConverter.ToIpa(word);
 
             // Convert to Katakana
-            string actualKana = kanaConverter.ToKatakana(ipa, word);
+            string actualKana = _kanaConverter.ToKatakana(ipa, word);
+
+            _output.WriteLine($"Word: {word}, IPA: {ipa}, Expected: {expectedKana}, Actual: {actualKana}");
 
             // Assert
             Assert.Equal(expectedKana, actualKana);

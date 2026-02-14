@@ -1,1 +1,6 @@
+*.txt
 SimpleIpaToKanaSharp/SimpeIpaToKanaSharp.Test/test_results*.txt
+temp/
+bin/
+obj/
+
