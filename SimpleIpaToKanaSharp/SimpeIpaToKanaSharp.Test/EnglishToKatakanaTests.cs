@@ -17,7 +17,7 @@ namespace SimpleIpaToKanaSharp.Tests
         [InlineData("You", "ユ")] // Standard: ユー
         [InlineData("Yes", "イエス")]
         [InlineData("No", "ノー")]
-        [InlineData("Please", "プリズ")] // Standard: プリーズ
+        [InlineData("Please", "プリーズ")] // Standard: プリーズ
         [InlineData("Sorry", "ソリー")] // Standard: ソーリー (Improved from サリー)
 
         // Tech Terms
@@ -47,7 +47,7 @@ namespace SimpleIpaToKanaSharp.Tests
         [InlineData("Mouse", "マース")] // Standard: マウス
         [InlineData("Keyboard", "キボード")] // Standard: キーボード
         [InlineData("Monitor", "モナッター")] // Standard: モニター (Improved from マナッター)
-        [InlineData("Screen", "スクリン")] // Standard: スクリーン
+        [InlineData("Screen", "スクリーン")] // Standard: スクリーン
         [InlineData("Click", "クリック")]
         [InlineData("Type", "タイプ")]
         [InlineData("Code", "コード")]
@@ -76,7 +76,7 @@ namespace SimpleIpaToKanaSharp.Tests
         // Colors
         [InlineData("Red", "レッド")]
         [InlineData("Blue", "ブル")] // Standard: ブルー
-        [InlineData("Green", "グリン")] // Standard: グリーン
+        [InlineData("Green", "グリーン")] // Standard: グリーン
         [InlineData("Yellow", "イエロー")]
         [InlineData("Black", "ブラック")]
         [InlineData("White", "ワイト")] // Standard: ホワイト
@@ -111,16 +111,16 @@ namespace SimpleIpaToKanaSharp.Tests
         [InlineData("Potato", "パッテイトー")] // Standard: ポテト
         [InlineData("Bread", "ブレッド")]
         [InlineData("Butter", "バッター")] // Standard: バター
-        [InlineData("Cheese", "チズ")] // Standard: チーズ
+        [InlineData("Cheese", "チーズ")] // Standard: チーズ
         [InlineData("Milk", "ミルク")]
         [InlineData("Coffee", "コフィー")] // Standard: コーヒー (Improved from カフィー)
         [InlineData("Tea", "ティー")]
-        [InlineData("Beer", "ビー")] // Standard: ビール
+        [InlineData("Beer", "ビール")] // Standard: ビール
         [InlineData("Wine", "ワイン")]
         [InlineData("Water", "ウォッター")] // Standard: ウォーター
         [InlineData("Juice", "ジュス")] // Standard: ジュース
         [InlineData("Rice", "ライス")]
-        [InlineData("Beef", "ビフ")] // Standard: ビーフ
+        [InlineData("Beef", "ビーフ")] // Standard: ビーフ
         [InlineData("Pork", "ポーク")]
         [InlineData("Chicken", "チッカン")] // Standard: チキン
         

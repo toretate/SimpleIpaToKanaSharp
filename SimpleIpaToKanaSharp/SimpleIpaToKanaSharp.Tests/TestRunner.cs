@@ -13,7 +13,7 @@ namespace ValidationApp
             
             // List of words causing issues
             var words = new[] { 
-                "Computer", "Soccer", "Robot", "Box", "Fox", "Money", "Monkey", "Company", "Color", "Cover"
+                "Freezer", "Reach", "Punishable", "Navigation", "Extend", "Understand", "Tower", "Intervention", "Perfect"
             };
 
             foreach (var word in words)

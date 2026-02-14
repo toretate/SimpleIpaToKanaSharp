@@ -129,6 +129,40 @@ namespace SimpleIpaToKanaSharp
                                      if (i <= 2) category = VowelCategory.O; 
                              }
                         }
+                        // heuristic for Ex- (Extend -> エクステンド)
+                        else if (word != null && i == 0 && (token == "ɪ" || token == "e") && word.StartsWith("Ex", StringComparison.OrdinalIgnoreCase))
+                        {
+                             // Force E sound for first vowel if Ex
+                             // But we are in IsConsonant block? No we are processing NextToken (Vowel)
+                             // Actually we need to change the Vowel Kana itself or the Category?
+                             // Here we only determine Category for Consonant+Vowel.
+                             // But 'Extend' starts with Vowel `ɪ`. This logic is inside `IsConsonant` check?
+                             // Wait, logic is: if (IsConsonant(token)) { if (Next is Vowel) ... }
+                             // 'Extend' starts with 'ɪ' (Vowel). So it goes to `else if (IsVowel(token))` block!
+                        }
+                        
+                        // heuristic for -tion/-sion (Navigation -> ナビゲーション)
+                        // token = ʃ/ʒ/tʃ, nextToken = ə/ʌ
+                        if ((token == "ʃ" || token == "ʒ" || token == "tʃ" || token == "dʒ" || token == "ʧ" || token == "ʤ") && (nextToken == "ə" || nextToken == "ʌ"))
+                        {
+                            // Check if next next is n?
+                            int tionNextIdx = i + 2;
+                            if (tionNextIdx < tokens.Count && tokens[tionNextIdx] == "n")
+                            {
+                                category = VowelCategory.O; // Force O -> ショ/ジョ/チョ
+                            }
+                        }
+                        
+                        // heuristic for -ble/-ple (Punishable -> パニッシャブル)
+                        // token = b/p/g/k, nextToken = ə/ʌ
+                        if ((token == "b" || token == "p" || token == "g" || token == "k") && (nextToken == "ə" || nextToken == "ʌ"))
+                        {
+                             int bleNextIdx = i + 2;
+                             if (bleNextIdx < tokens.Count && tokens[bleNextIdx] == "l")
+                             {
+                                 category = VowelCategory.U; // Force U -> ブ/プ/グ/ク + ル
+                             }
+                        }
                         
                         string kana;
                         if (token == "j" && category == VowelCategory.E) kana = "イエ";
@@ -136,11 +170,34 @@ namespace SimpleIpaToKanaSharp
                         
                         if (i > 0 && IsShortVowel(tokens[i - 1]) && Stops.Contains(token))
                         {
-                            sb.Append("ッ");
+                            bool skipSokuon = false;
+                            // Check for k + Consonant (Perfect -> パーフェクト)
+                            if (token == "k")
+                            {
+                                int idxAfterK = i + 1; // Since we are currently processing token at i, next is i+1
+                                // But wait, we are in IsConsonant(token) + IsVowel(nextToken) block logic?
+                                // NO! Check lines 109 and 111.
+                                // We are in `if (nextToken != null && IsVowel(nextToken))`.
+                                // So `token` is followed by `vowel`.
+                                // So `k` + `vowel` -> `カ`.
+                                // Sokuon is inserted BEFORE `k`.
+                                // For 'Perfect' `pɚfɛkt`:
+                                // `f` + `ɛ` -> `フェ`.
+                                // Next `k`. Next `t`.
+                                // `k` is Consonant `IsConsonant("k")`.
+                                // Next `t` is Consonant `IsConsonant("t")`.
+                                // `IsVowel("t")` is False.
+                                // So it goes to `else` block at line 237!
+                                // It does NOT come here (Line 170 is inside `if (IsVowel)` block).
+                            }
+                            
+                            if (!skipSokuon && !sb.ToString().EndsWith("ー"))
+                                sb.Append("ッ");
                         }
                         
                         sb.Append(kana);
                         
+
                         if (nextToken.Contains("ː")) sb.Append("ー");
                         else if (nextToken == "eɪ") sb.Append("イ");
                         else if (nextToken == "aɪ") sb.Append("イ");
@@ -153,15 +210,32 @@ namespace SimpleIpaToKanaSharp
                         else if (nextToken == "ej") sb.Append("イ");
                         else if (nextToken == "oj") sb.Append("イ");
                         else if (nextToken == "ɚ") sb.Append("ー");
-                        else if (nextToken == "i" && (i + 1 == tokens.Count - 1)) sb.Append("ー"); // happy -> ハッピー
-                        else if (nextToken == "ə" && (i + 1 == tokens.Count - 1)) sb.Append("ー"); 
+                        else if (nextToken == "i") 
+                        {
+                             // heuristic for ee/ea/ie/ei -> Long vowel (Freezer -> フリーザー)
+                             if (word != null && (word.Contains("ee") || word.Contains("ea") || word.Contains("ie") || word.Contains("ei") || word.EndsWith("y")))
+                             {
+                                 sb.Append("ー");
+                             }
+                             else if (i + 1 == tokens.Count - 1) sb.Append("ー"); // Happy -> ハッピー existing rule
+                             else if (token == "l") sb.Append("ー"); // Lee -> リー
+                        }
+                        else if (nextToken == "ə")
+                        {
+                             if (i + 1 == tokens.Count - 1) sb.Append("ー"); 
+                             // Special case for -tion -> ション (No long vowel) handled by category change?
+                             // If category O was forced, we usually don't want 'ー'. 
+                             // But standard 'O' row is 'オ'. 
+                             // For 'ʃ' + 'O' -> 'ショ'. If we append 'ー', becomes 'ショー'. 
+                             // Alkana 'Navigation' -> 'ナヴィゲイション' (Short).
+                        } 
 
                        // Handle post-vocalic 'ɹ' (Morning -> モーニング)
                        // If we just processed Consonant+Vowel, and next is 'ɹ', and 'ɹ' is not followed by Vowel
-                       int nextIdx = i + 2;
-                       if (nextIdx < tokens.Count && tokens[nextIdx] == "ɹ")
+                       int rNextIdx = i + 2;
+                       if (rNextIdx < tokens.Count && tokens[rNextIdx] == "ɹ")
                        {
-                           var afterR = (nextIdx + 1 < tokens.Count) ? tokens[nextIdx + 1] : null;
+                           var afterR = (rNextIdx + 1 < tokens.Count) ? tokens[rNextIdx + 1] : null;
                            if (afterR == null || !IsVowel(afterR))
                            {
                                sb.Append("ー");
@@ -185,7 +259,15 @@ namespace SimpleIpaToKanaSharp
                         {
                             if (i > 0 && IsShortVowel(tokens[i - 1]) && Stops.Contains(token))
                             {
-                                sb.Append("ッ");
+                                bool skipSokuon = false;
+                                // Exception for k + t/s/ʃ (Perfect -> パーフェクト)
+                                if (token == "k" && nextToken != null && (nextToken == "t" || nextToken == "s" || nextToken == "ʃ"))
+                                {
+                                    skipSokuon = true;
+                                }
+                                
+                                if (!skipSokuon && !sb.ToString().EndsWith("ー"))
+                                    sb.Append("ッ");
                             }
                             
                             if (ConsonantMap.ContainsKey(token))
@@ -197,10 +279,17 @@ namespace SimpleIpaToKanaSharp
                 }
                 else if (IsVowel(token))
                 {
+                     string output = token;
                      if (VowelKana.ContainsKey(token))
-                        sb.Append(VowelKana[token]);
-                     else
-                        sb.Append(token);
+                        output = VowelKana[token];
+                     
+                     // heuristic for Ex- (Extend -> エクステンド)
+                     if (i == 0 && (token == "ɪ" || token == "ɛ" || token == "e") && word != null && word.StartsWith("Ex", StringComparison.OrdinalIgnoreCase))
+                     {
+                         output = "エ";
+                     }
+                     
+                     sb.Append(output);
                 }
                 else
                 {
