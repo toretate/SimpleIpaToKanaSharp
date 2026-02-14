@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SimpleIpaToKanaSharpCli": {
+      "commandName": "Project",
+      "commandLineArgs": "--engine microsoft word"
+    }
+  }
+}

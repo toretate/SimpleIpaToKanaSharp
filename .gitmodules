@@ -1,0 +1,3 @@
+[submodule "SimpleIpaToKanaSharp/externals/CsPhonetics"]
+	path = SimpleIpaToKanaSharp/externals/CsPhonetics
+	url = https://github.com/qkmaxware/CsPhonetics.git
