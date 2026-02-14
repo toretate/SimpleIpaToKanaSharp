@@ -84,6 +84,10 @@ dotnet run --project SimpleIpaToKanaSharpCli "Apple"
 - [WaniKani Japanese Phonoogy Chart](https://community.wanikani.com/t/japanese-phonology-chart-with-ipa/48255)
 - [Katakana in IPA Notation](https://syllabary.sourceforge.net/Katakana/Katakana.html)
 - [【python】機械学習ベースの英語-カタカナ変換ライブラリの比較](https://qiita.com/shimajiroxyz/items/a509acf5a188fc8002c2)
+- [google-ime-user-dictionary-ja-en](https://github.com/KEINOS/google-ime-user-dictionary-ja-en?tab=readme-ov-file)
+- [新語・固有表現に強い「mecab-ipadic-NEologd」の効果を調べてみた](https://engineering.linecorp.com/ja/blog/mecab-ipadic-neologd-new-words-and-expressions)
+- [英和辞書データ『ejdict-hand』(配布版)](https://github.com/kujirahand/EJDict/blob/master/tools/README.md)
+- [日本語WordNetを用いて、JSON形式で簡単に取り扱える辞書を作ってみました。](https://qiita.com/oyahiroki/items/973f5bb94cd3458983bd)
 
 ## ライセンス
 
