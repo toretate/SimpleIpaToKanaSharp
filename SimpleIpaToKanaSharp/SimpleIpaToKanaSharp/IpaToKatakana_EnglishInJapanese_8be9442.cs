@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SimpleIpaToKanaSharp
 {
-    public class IpaToKatakana_EnglishInJapanese : IpaToKatakana
+    public class IpaToKatakana_EnglishInJapanese_8be9442 : IpaToKatakana
     {
         // Vowel definitions
         private static readonly HashSet<string> ShortVowels = new() { "ɪ", "ɛ", "æ", "ʌ", "ɒ", "ʊ", "ə", "e", "a", "i", "u", "o", "ɔ", "ɑ" };
