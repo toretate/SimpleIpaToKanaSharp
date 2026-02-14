@@ -13,14 +13,13 @@ namespace ValidationApp
             
             // List of words causing issues
             var words = new[] { 
-                "Hello", "Computer", "Internet", "Soccer", "Orange", "Tiger", "Baseball", 
-                "Morning", "White", "Tomato", "Water", "Login"
+                "Computer", "Soccer", "Robot", "Box", "Fox", "Money", "Monkey", "Company", "Color", "Cover"
             };
 
             foreach (var word in words)
             {
                 var ipa = ipaConverter.ToIpa(word);
-                var kana = kanaConverter.ToKatakana(ipa);
+                var kana = kanaConverter.ToKatakana(ipa, word);
                 Console.WriteLine($"Word: {word}");
                 Console.WriteLine($"IPA: {ipa}");
                 Console.Write("IPA Hex: ");

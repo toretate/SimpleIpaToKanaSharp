@@ -18,10 +18,10 @@ namespace SimpleIpaToKanaSharp.Tests
         [InlineData("Yes", "イエス")]
         [InlineData("No", "ノー")]
         [InlineData("Please", "プリズ")] // Standard: プリーズ
-        [InlineData("Sorry", "サリー")] // Standard: ソーリー
+        [InlineData("Sorry", "ソリー")] // Standard: ソーリー (Improved from サリー)
 
         // Tech Terms
-        [InlineData("Computer", "カンピュッター")] // Standard: コンピューター
+        [InlineData("Computer", "コンピュッター")] // Standard: コンピューター (Improved from カンピュッター)
         [InlineData("Internet", "インターネット")]
         [InlineData("Program", "プローグラム")] // Standard: プログラム
         [InlineData("System", "シスタム")] // Standard: システム
@@ -39,14 +39,14 @@ namespace SimpleIpaToKanaSharp.Tests
         [InlineData("User", "ユザー")] // Standard: ユーザー
         [InlineData("Login", "ロギン")] // Standard: ログイン
         [InlineData("Logout", "ロゴウット")] // Standard: ログアウト
-        [InlineData("Password", "ピャスワード")] // Standard: パスワード
+        [InlineData("Password", "パスワード")] // Standard: パスワード (Improved from ピャスワード)
         [InlineData("Security", "シキュラッティー")] // Standard: セキュリティ
         [InlineData("File", "ファイル")]
         [InlineData("Folder", "フォールダー")] // Standard: フォルダ
         [InlineData("Window", "ウィンドー")] // Standard: ウィンドウ
         [InlineData("Mouse", "マース")] // Standard: マウス
         [InlineData("Keyboard", "キボード")] // Standard: キーボード
-        [InlineData("Monitor", "マナッター")] // Standard: モニター
+        [InlineData("Monitor", "モナッター")] // Standard: モニター (Improved from マナッター)
         [InlineData("Screen", "スクリン")] // Standard: スクリーン
         [InlineData("Click", "クリック")]
         [InlineData("Type", "タイプ")]
@@ -67,10 +67,10 @@ namespace SimpleIpaToKanaSharp.Tests
         [InlineData("Search", "サーチ")]
         [InlineData("Engine", "エンジャン")] // Standard: エンジン
         [InlineData("Tech", "テック")]
-        [InlineData("Technology", "テックナラッジー")] // Standard: テクノロジー
+        [InlineData("Technology", "テックノラッジー")] // Standard: テクノロジー (Improved from テックナラッジー)
         [InlineData("Digital", "ディッジャッタル")] // Standard: デジタル
         [InlineData("Analog", "アナログ")]
-        [InlineData("Robot", "ローバット")] // Standard: ロボット
+        [InlineData("Robot", "ローボット")] // Standard: ロボット (Improved from ローバット)
         [InlineData("AI", "アイ")] // Standard: エーアイ
 
         // Colors
@@ -97,6 +97,8 @@ namespace SimpleIpaToKanaSharp.Tests
         [InlineData("Rabbit", "ラバット")] // Standard: ラビット
         [InlineData("Monkey", "マンキー")] // Standard: モンキー
         [InlineData("Elephant", "エラファント")] // Standard: エレファント
+        [InlineData("Box", "ボックス")]
+        [InlineData("Fox", "フォックス")]
 
         // Food
         [InlineData("Apple", "アッパル")] // Standard: アップル
@@ -111,7 +113,7 @@ namespace SimpleIpaToKanaSharp.Tests
         [InlineData("Butter", "バッター")] // Standard: バター
         [InlineData("Cheese", "チズ")] // Standard: チーズ
         [InlineData("Milk", "ミルク")]
-        [InlineData("Coffee", "カフィー")] // Standard: コーヒー
+        [InlineData("Coffee", "コフィー")] // Standard: コーヒー (Improved from カフィー)
         [InlineData("Tea", "ティー")]
         [InlineData("Beer", "ビー")] // Standard: ビール
         [InlineData("Wine", "ワイン")]
@@ -126,9 +128,9 @@ namespace SimpleIpaToKanaSharp.Tests
         // [InlineData("Sport", "スポーツ")]
         [InlineData("Soccer", "サッカー")]
         [InlineData("Baseball", "ベイスボル")] // Standard: ベースボール
-        [InlineData("Basketball", "ビャスカットボル")] // Standard: バスケットボール
+        [InlineData("Basketball", "バスカットボル")] // Standard: バスケットボール (Improved from ビャスカットボル)
         [InlineData("Tennis", "テナス")] // Standard: テニス
-        [InlineData("Golf", "ガルフ")] // Standard: ゴルフ
+        [InlineData("Golf", "ゴルフ")] // Standard: ゴルフ (Improved from ガルフ)
         [InlineData("Ski", "スキー")]
         [InlineData("Skate", "スケイト")] // Standard: スケート
         [InlineData("Swim", "スウィム")] // Standard: スイム
@@ -147,7 +149,7 @@ namespace SimpleIpaToKanaSharp.Tests
             Console.WriteLine($"Word: {word}, IPA: {ipa}");
 
             // Convert to Katakana
-            string actualKana = kanaConverter.ToKatakana(ipa);
+            string actualKana = kanaConverter.ToKatakana(ipa, word);
 
             // Assert
             Assert.Equal(expectedKana, actualKana);

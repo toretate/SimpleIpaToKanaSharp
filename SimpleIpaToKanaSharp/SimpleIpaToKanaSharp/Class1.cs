@@ -30,7 +30,7 @@ namespace SimpleIpaToKanaSharp
 
             IpaToKatakana_KatakanaInIpaNotation ipaToKana = new();
             IpaToKatakana_EnglishInJapanese ipaToKanaEnglish = new();
-            return ipaToKanaEnglish.ToKatakana(ipa);
+            return ipaToKanaEnglish.ToKatakana(ipa, word);
 
             //return ipaToKana.ToKatakana(ipa);
         }

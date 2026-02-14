@@ -8,6 +8,6 @@ namespace SimpleIpaToKanaSharp
 {
     public interface IpaToKatakana
     {
-        public string ToKatakana(string ipa);
+        public string ToKatakana(string ipa, string word = null);
     }
 }

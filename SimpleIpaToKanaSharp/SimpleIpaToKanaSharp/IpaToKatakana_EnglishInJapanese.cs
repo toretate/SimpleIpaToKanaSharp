@@ -30,9 +30,9 @@ namespace SimpleIpaToKanaSharp
             { "d",  new("ダ", "ディ", "ドゥ", "デ", "ド", "ダ", "ド") },
             { "n",  new("ナ", "ニ", "ヌ", "ネ", "ノ", "ナ", "ン") }, 
             { "h",  new("ハ", "ヒ", "フ", "ヘ", "ホ", "ハ", "フ") }, 
-            { "b",  new("バ", "ビ", "ブ", "ベ", "ボ", "ビャ", "ブ") },
-            { "p",  new("パ", "ピ", "プ", "ペ", "ポ", "ピャ", "プ") },
-            { "m",  new("マ", "ミ", "ム", "メ", "モ", "ミャ", "ム") },
+            { "b",  new("バ", "ビ", "ブ", "ベ", "ボ", "バ", "ブ") },
+            { "p",  new("パ", "ピ", "プ", "ペ", "ポ", "パ", "プ") },
+            { "m",  new("マ", "ミ", "ム", "メ", "モ", "マ", "ム") },
             { "y",  new("ヤ", "イ", "ユ", "イェ", "ヨ", "ヤ", "イ") },
             { "j",  new("ヤ", "イ", "ユ", "イェ", "ヨ", "ヤ", "イ") },
             { "r",  new("ラ", "リ", "ル", "レ", "ロ", "ラ", "") }, 
@@ -50,7 +50,7 @@ namespace SimpleIpaToKanaSharp
             { "ʧ",  new("チャ", "チ", "チュ", "チェ", "チョ", "チャ", "チ") },
             { "ts", new("ツァ", "ツィ", "ツ", "ツェ", "ツォ", "ツァ", "ツ") },
             { "dz", new("ザ", "ジ", "ズ", "ゼ", "ゾ", "ザ", "ズ") },
-            { "ŋ",  new("ンガ", "ンギ", "ング", "ンゲ", "ンゴ", "ンギャ", "ング") },
+            { "ŋ",  new("ンガ", "ンギ", "ング", "ンゲ", "ンゴ", "ンガ", "ング") },
             { "ɹ",  new("ラ", "リ", "ル", "レ", "ロ", "ラ", "ル") },
             // Clusters
             { "kj", new("キャ", "キ", "キュ", "キェ", "キョ", "キャ", "ク") },
@@ -96,7 +96,7 @@ namespace SimpleIpaToKanaSharp
             { "ɔ", "オ" }, { "ɑ", "ア" }
         };
 
-        public string ToKatakana(string ipa)
+        public string ToKatakana(string ipa, string word = null)
         {
             var sb = new StringBuilder();
             var tokens = Tokenize(ipa);
@@ -111,6 +111,24 @@ namespace SimpleIpaToKanaSharp
                     if (nextToken != null && IsVowel(nextToken))
                     {
                         var category = GetVowelCategory(nextToken);
+                        
+                        // heuristic for ɑ -> o (Box -> ボックス)
+                        if (word != null && (nextToken == "ɑ" || nextToken == "ɒ") && word.IndexOf("o", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                             if (!word.Equals("Soccer", StringComparison.OrdinalIgnoreCase)) // Soccer -> サッカー (Exception)
+                                category = VowelCategory.O;
+                        }
+                        // heuristic for ə/ʌ -> o (Computer -> コンピューター) if starts with Com/Con
+                        else if (word != null && (nextToken == "ə" || nextToken == "ʌ") && word.StartsWith("Co", StringComparison.OrdinalIgnoreCase))
+                        {
+                             // Check if 3rd char is m or n (Com/Con)
+                             // And length > 4 (Exclude Come, etc.)
+                             if (word.Length > 4 && (word.Length > 2 && "mnMN".Contains(word[2])))
+                             {
+                                 if (!word.Equals("Company", StringComparison.OrdinalIgnoreCase)) // Company -> カンパニー
+                                     if (i <= 2) category = VowelCategory.O; 
+                             }
+                        }
                         
                         string kana;
                         if (token == "j" && category == VowelCategory.E) kana = "イエ";
