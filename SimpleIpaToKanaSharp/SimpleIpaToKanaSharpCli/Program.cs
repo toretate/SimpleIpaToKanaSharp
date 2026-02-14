@@ -18,13 +18,12 @@ for (int i = 0; i < args.Length; i++)
 
 if (string.IsNullOrEmpty(word))
 {
-    Console.WriteLine("Usage: SimpleIpaToKanaSharpCli [--engine qkmaxware|microsoft] <word>");
+    Console.WriteLine("Usage: SimpleIpaToKanaSharpCli [--engine qkmaxware] <word>");
     return;
 }
 
 var engineType = engine?.ToLower() switch
 {
-    "microsoft" => IpaEngineType.Microsoft,
     _ => IpaEngineType.Qkmaxware
 };
 

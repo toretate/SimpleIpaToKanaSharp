@@ -12,7 +12,6 @@ namespace SimpleIpaToKanaSharp
             _ipaConverter = engineType switch
             {
                 IpaEngineType.Qkmaxware => new QkmaxwareIpaConverter(),
-                IpaEngineType.Microsoft => new MicrosoftIpaConverter(),
                 _ => throw new ArgumentException($"Unknown engine: {engineType}")
             };
         }

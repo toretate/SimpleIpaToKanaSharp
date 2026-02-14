@@ -34,6 +34,5 @@ IPA表記への変換は、System.Speech.Recognitionを使用して行ってい�
 # 謝辞
 このプロジェクトは、以下のリソースを参考にして作成されました。
 - Qkmaxware.Phonetics
-- Microsoft.PhoneticMatching 
 - [英語の発音をカタカナで表す方法](https://www.sljfaq.org/afaq/english-in-japanese.ja.html)
 - [IPA表記](https://en.wikipedia.org/wiki/International_Phonetic_Alphabet)
