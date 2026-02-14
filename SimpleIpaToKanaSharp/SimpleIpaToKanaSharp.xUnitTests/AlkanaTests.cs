@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using SimpleIpaToKanaSharp;
 
-namespace SimpleIpaToKanaSharp.Tests
+namespace SimpleIpaToKanaSharp.xUnitTests
 {
     public class AlkanaTests
     {
@@ -1012,16 +1012,16 @@ namespace SimpleIpaToKanaSharp.Tests
             var ipaConverter = new QkmaxwareIpaConverter();
             var kanaConverter = new IpaToKatakana_EnglishInJapanese();
 
-            try 
+            try
             {
                 var ipa = ipaConverter.ToIpa(word);
                 // Some words might not be in IPA dictionary, returning same or null.
-                if (string.IsNullOrEmpty(ipa) || ipa == word) 
+                if (string.IsNullOrEmpty(ipa) || ipa == word)
                 {
                     // Skip if IPA conversion fails or returns word (meaning not found)
                     // But we can't easily skip in InlineData without marking as skipped.
                     // Let's just return if we can't convert, or try best effort.
-                    return; 
+                    return;
                 }
 
                 var kana = kanaConverter.ToKatakana(ipa, word);

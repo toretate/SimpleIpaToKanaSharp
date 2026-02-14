@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using SimpleIpaToKanaSharp;
 
-namespace SimpleIpaToKanaSharp.Tests
+namespace SimpleIpaToKanaSharp.xUnitTests
 {
     public class EnglishToKatakanaTests
     {

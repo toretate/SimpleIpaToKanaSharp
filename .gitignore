@@ -3,4 +3,5 @@ SimpleIpaToKanaSharp/SimpeIpaToKanaSharp.Test/test_results*.txt
 temp/
 bin/
 obj/
-
+ReadMe_*
+Test_Project_Reorganization

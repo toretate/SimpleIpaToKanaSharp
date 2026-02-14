@@ -1,8 +1,9 @@
 <Solution>
   <Folder Name="/ソリューション項目/">
-    <File Path="ReadMe.md" />
+    <File Path="../ReadMe.md" />
   </Folder>
-  <Project Path="SimpeIpaToKanaSharp.Test/SimpeIpaToKanaSharp.Test.csproj" />
+  <Project Path="SimpleIpaToKanaSharp.xUnitTests/SimpleIpaToKanaSharp.xUnitTests.csproj" />
+  <Project Path="SimpleIpaToKanaSharp.AlkanaTests/SimpleIpaToKanaSharp.AlkanaTests.csproj" />
   <Project Path="SimpleIpaToKanaSharp/SimpleIpaToKanaSharp.csproj" />
   <Project Path="SimpleIpaToKanaSharpCli/SimpleIpaToKanaSharpCli.csproj" />
 </Solution>

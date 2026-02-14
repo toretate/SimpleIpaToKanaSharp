@@ -2,11 +2,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SimpleIpaToKanaSharp\SimpleIpaToKanaSharp.csproj" />
+    <Reference Include="Qkmaxware.Phonetics">
+      <HintPath>..\SimpleIpaToKanaSharp\libs\Qkmaxware.Phonetics.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
