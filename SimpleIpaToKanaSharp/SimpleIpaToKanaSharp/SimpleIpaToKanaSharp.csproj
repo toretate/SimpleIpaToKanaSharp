@@ -10,7 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\externals\CsPhonetics\Phonetics\Qkmaxware.Phonetics.csproj" />
+    <Reference Include="Qkmaxware.Phonetics">
+      <HintPath>..\libs\Qkmaxware.Phonetics.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 

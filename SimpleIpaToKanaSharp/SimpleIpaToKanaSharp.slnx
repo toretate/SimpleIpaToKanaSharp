@@ -2,7 +2,6 @@
   <Folder Name="/ソリューション項目/">
     <File Path="ReadMe.md" />
   </Folder>
-  <Project Path="externals/CsPhonetics/Phonetics/Qkmaxware.Phonetics.csproj" />
   <Project Path="SimpeIpaToKanaSharp.Test/SimpeIpaToKanaSharp.Test.csproj" />
   <Project Path="SimpleIpaToKanaSharp/SimpleIpaToKanaSharp.csproj" />
   <Project Path="SimpleIpaToKanaSharpCli/SimpleIpaToKanaSharpCli.csproj" />
