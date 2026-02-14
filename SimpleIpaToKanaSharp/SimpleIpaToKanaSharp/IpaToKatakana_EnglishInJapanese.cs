@@ -8,7 +8,7 @@ namespace SimpleIpaToKanaSharp
     public class IpaToKatakana_EnglishInJapanese : IpaToKatakana
     {
         // Vowel definitions
-        private static readonly HashSet<string> ShortVowels = new() { "ɪ", "ɛ", "æ", "ʌ", "ɒ", "ʊ", "ə", "e", "a", "i", "u", "o" };
+        private static readonly HashSet<string> ShortVowels = new() { "ɪ", "ɛ", "æ", "ʌ", "ɒ", "ʊ", "ə", "e", "a", "i", "u", "o", "ɔ", "ɑ" };
         private static readonly HashSet<string> LongVowels = new() { "ɑː", "iː", "uː", "ɔː", "ɜː", "ɚ", "ɝ", "oʊ", "eɪ", "aɪ", "aʊ", "ɔɪ", "juː", "ər" }; // Added ər
 
         private enum VowelCategory { A, I, U, E, O, AE }
@@ -44,14 +44,28 @@ namespace SimpleIpaToKanaSharp
             { "ð",  new("ザ", "ジ", "ズ", "ゼ", "ゾ", "ザ", "ズ") },
             { "ʃ",  new("シャ", "シ", "シュ", "シェ", "ショ", "シャ", "シュ") },
             { "ʒ",  new("ジャ", "ジ", "ジュ", "ジェ", "ジョ", "ジャ", "ジュ") },
-            { "tʃ", new("チャ", "チ", "チュ", "チェ", "チョ", "チャ", "チ") },
             { "dʒ", new("ジャ", "ジ", "ジュ", "ジェ", "ジョ", "ジャ", "ジ") },
+            { "ʤ",  new("ジャ", "ジ", "ジュ", "ジェ", "ジョ", "ジャ", "ジ") },
+            { "tʃ", new("チャ", "チ", "チュ", "チェ", "チョ", "チャ", "チ") },
+            { "ʧ",  new("チャ", "チ", "チュ", "チェ", "チョ", "チャ", "チ") },
             { "ts", new("ツァ", "ツィ", "ツ", "ツェ", "ツォ", "ツァ", "ツ") },
             { "dz", new("ザ", "ジ", "ズ", "ゼ", "ゾ", "ザ", "ズ") },
-            { "ŋ",  new("ンガ", "ンギ", "ング", "ンゲ", "ンゴ", "ンギャ", "ング") } 
+            { "ŋ",  new("ンガ", "ンギ", "ング", "ンゲ", "ンゴ", "ンギャ", "ング") },
+            { "ɹ",  new("ラ", "リ", "ル", "レ", "ロ", "ラ", "ル") },
+            // Clusters
+            { "kj", new("キャ", "キ", "キュ", "キェ", "キョ", "キャ", "ク") },
+            { "gj", new("ギャ", "ギ", "ギュ", "ギェ", "ギョ", "ギャ", "グ") },
+            { "sj", new("シャ", "シ", "シュ", "シェ", "ショ", "シャ", "シュ") },
+            { "zj", new("ジャ", "ジ", "ジュ", "ジェ", "ジョ", "ジャ", "ジュ") },
+            { "nj", new("ニャ", "ニ", "ニュ", "ニェ", "ニョ", "ニャ", "ン") },
+            { "hj", new("ヒャ", "ヒ", "ヒュ", "ヒェ", "ヒョ", "ヒャ", "フ") },
+            { "bj", new("ビャ", "ビ", "ビュ", "ビェ", "ビョ", "ビャ", "ブ") },
+            { "pj", new("ピャ", "ピ", "ピュ", "ピェ", "ピョ", "ピャ", "プ") },
+            { "mj", new("ミャ", "ミ", "ミュ", "ミェ", "ミョ", "ミャ", "ム") },
+            { "rj", new("リャ", "リ", "リュ", "リェ", "リョ", "リャ", "ル") } 
         };
 
-        private static readonly HashSet<string> Stops = new() { "p", "t", "d", "k", "tʃ", "dʒ", "ʃ" };
+        private static readonly HashSet<string> Stops = new() { "p", "t", "d", "k", "tʃ", "dʒ", "ʃ", "ʧ", "ʤ" };
 
         private static VowelCategory GetVowelCategory(string vowel)
         {
@@ -75,7 +89,11 @@ namespace SimpleIpaToKanaSharp
             { "ɜː", "アー" }, { "ɚ", "アー" }, { "ɝ", "アー" },
             { "juː", "ユー" }, 
             { "jʊ", "ユ" },
-            { "ər", "アー" } // Added mapping
+            { "ər", "アー" },
+            // Qkmaxware specific/Missing
+            { "aj", "アイ" }, { "ej", "エイ" }, { "oj", "オイ" },
+            { "aw", "オー" }, { "ow", "オー" }, { "uw", "ウー" },
+            { "ɔ", "オ" }, { "ɑ", "ア" }
         };
 
         public string ToKatakana(string ipa)
@@ -111,14 +129,27 @@ namespace SimpleIpaToKanaSharp
                         else if (nextToken == "ɔɪ") sb.Append("イ");
                         else if (nextToken == "aʊ") sb.Append("ウ");
                         else if (nextToken == "oʊ") sb.Append("ー");
-                        else if (nextToken == "i" && (i + 1 == tokens.Count - 1)) sb.Append("ー"); 
+                        else if (nextToken == "ow") sb.Append("ー");
+                        else if (nextToken == "aw") sb.Append("ー");
+                        else if (nextToken == "aj") sb.Append("イ");
+                        else if (nextToken == "ej") sb.Append("イ");
+                        else if (nextToken == "oj") sb.Append("イ");
+                        else if (nextToken == "ɚ") sb.Append("ー");
+                        else if (nextToken == "i" && (i + 1 == tokens.Count - 1)) sb.Append("ー"); // happy -> ハッピー
                         else if (nextToken == "ə" && (i + 1 == tokens.Count - 1)) sb.Append("ー"); 
-                        // ər is Long Vowel mapped to "アー", but if it follows Consonant?
-                        // "t" + "ər". GetConsonantKana("t", A) -> "タ".
-                        // Is "ər" LongVowels? Yes.
-                        // "ər".Contains("ː") is False.
-                        // Need check for "ər".
-                        else if (nextToken == "ər") sb.Append("ー");
+
+                       // Handle post-vocalic 'ɹ' (Morning -> モーニング)
+                       // If we just processed Consonant+Vowel, and next is 'ɹ', and 'ɹ' is not followed by Vowel
+                       int nextIdx = i + 2;
+                       if (nextIdx < tokens.Count && tokens[nextIdx] == "ɹ")
+                       {
+                           var afterR = (nextIdx + 1 < tokens.Count) ? tokens[nextIdx + 1] : null;
+                           if (afterR == null || !IsVowel(afterR))
+                           {
+                               sb.Append("ー");
+                               i++; // Skip ɹ
+                           }
+                       }
 
                         i++; 
                     }
@@ -128,7 +159,7 @@ namespace SimpleIpaToKanaSharp
                         {
                             sb.Append("ン");
                         }
-                        else if (token == "m" && (nextToken == "p" || nextToken == "b"))
+                        else if (token == "m" && nextToken != null && (nextToken.StartsWith("p") || nextToken.StartsWith("b")))
                         {
                             sb.Append("ン");
                         }

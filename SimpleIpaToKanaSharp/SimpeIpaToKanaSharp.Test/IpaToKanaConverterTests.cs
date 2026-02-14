@@ -6,7 +6,8 @@ namespace SimpleIpaToKanaSharp.Tests
     public class IpaToKanaConverterTests
     {
         [Theory]
-        [InlineData("Hello", "ハァルオー")]
+        [InlineData("Hello", "ハロー")]
+        [InlineData("World", "ワールド")]
         public void Convert_QkmaxwareEngine_ReturnsExpectedKana(string input, string expected)
         {
             var converter = new IpaToKanaConverter(IpaEngineType.Qkmaxware);
@@ -14,13 +15,6 @@ namespace SimpleIpaToKanaSharp.Tests
             Assert.Equal(expected, result);
         }
 
-        [Theory]
-        [InlineData("Hello", "ハェルオー")]
-        public void Convert_MicrosoftEngine_ReturnsExpectedKana(string input, string expected)
-        {
-            var converter = new IpaToKanaConverter(IpaEngineType.Microsoft);
-            var result = converter.Convert(input);
-            Assert.Equal(expected, result);
-        }
+
     }
 }

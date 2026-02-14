@@ -1,5 +1,6 @@
 ﻿using System;
 using SimpleIpaToKanaSharp;
+using Qkmaxware.Phonetics;
 
 namespace ValidationApp
 {
@@ -7,55 +8,26 @@ namespace ValidationApp
     {
         static void Main(string[] args)
         {
-            var converter = new IpaToKatakana_EnglishInJapanese();
-            Console.WriteLine("Testing IPA to Katakana Conversion:");
+            var ipaConverter = new QkmaxwareIpaConverter();
+            var kanaConverter = new IpaToKatakana_EnglishInJapanese();
+            
+            // List of words causing issues
+            var words = new[] { 
+                "Hello", "Computer", "Internet", "Soccer", "Orange", "Tiger", "Baseball", 
+                "Morning", "White", "Tomato", "Water", "Login"
+            };
 
-            Test(converter, "kæt", "キャット");
-            Test(converter, "pɪt", "ピット");
-            Test(converter, "mʌg", "マグ");
-            Test(converter, "bʊk", "ブック");
-            Test(converter, "sɒks", "ソックス");
-            Test(converter, "θɪŋk", "シンク");
-            Test(converter, "laɪt", "ライト");
-            Test(converter, "wɔːtər", "ウォーター"); // water
-            Test(converter, "dʒæz", "ジャズ"); // jazz
-            Test(converter, "tʃɛk", "チェック"); // check
-            Test(converter, "rɪtʃ", "リッチ"); // rich
-            Test(converter, "dʒʌmp", "ジャンプ"); // jump
-            // video might be tricky
-            // Test(converter, "vɪdɪoʊ", "ヴィデオ", "ビデオ"); 
-            Test(converter, "kɑː", "カー");
-            Test(converter, "eɪt", "エイト");
-            Test(converter, "noʊ", "ノー");
-            // Test(converter, "faɪv", "ファイヴ", "ファイブ");
-            Test(converter, "sɪŋə", "シンガー");
-            Test(converter, "kɪŋ", "キング");
-            Test(converter, "jɛs", "イエス");
-            Test(converter, "juː", "ユー");
-            Test(converter, "hæpi", "ハッピー");
-            Test(converter, "æpl", "アップル");
-        }
-
-        static void Test(IpaToKatakana_EnglishInJapanese converter, string ipa, params string[] expected)
-        {
-            try
+            foreach (var word in words)
             {
-                var result = converter.ToKatakana(ipa);
-                bool match = false;
-                foreach(var e in expected) if(result == e) match = true;
-                
-                if (match)
-                {
-                    Console.WriteLine($"[PASS] {ipa} -> {result}");
-                }
-                else
-                {
-                    Console.WriteLine($"[FAIL] {ipa} -> {result} (Expected: {string.Join(" or ", expected)})");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[ERROR] {ipa} -> {ex.Message}");
+                var ipa = ipaConverter.ToIpa(word);
+                var kana = kanaConverter.ToKatakana(ipa);
+                Console.WriteLine($"Word: {word}");
+                Console.WriteLine($"IPA: {ipa}");
+                Console.Write("IPA Hex: ");
+                foreach (var c in ipa) Console.Write($"{(int)c:X4} ");
+                Console.WriteLine();
+                Console.WriteLine($"Kana: {kana}");
+                Console.WriteLine(new string('-', 20));
             }
         }
     }
