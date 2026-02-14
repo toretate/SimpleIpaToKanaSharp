@@ -1,4 +1,4 @@
-# Alkana Conversion Results (Large Scale Test)
+﻿# Alkana Conversion Results (Large Scale Test)
 
 This document shows the results of a large-scale conversion test using the Alkana dataset (1,000 words).
 
