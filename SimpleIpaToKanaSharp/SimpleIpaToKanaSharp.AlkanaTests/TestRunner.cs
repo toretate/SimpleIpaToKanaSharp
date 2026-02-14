@@ -15,7 +15,7 @@ namespace SimpleIpaToKanaSharp.AlkanaTests
             var kanaConverter = new IpaToKatakana_EnglishInJapanese();
 
             var csvPath = "alkana_samples.csv";
-            var outputPath = "alkana_analysis.csv";
+            var outputPath = "alkana_analysis_legacy.csv";
 
             if (File.Exists(csvPath))
             {
@@ -100,12 +100,12 @@ namespace SimpleIpaToKanaSharp.AlkanaTests
                 return;
             }
 
-            var docPath = Path.Combine(rootPath, "docs", "ALKANA_RESULTS.md");
+            var docPath = Path.Combine(rootPath, "docs", "ALKANA_RESULTS_LEGACY.md");
 
             var sb = new System.Text.StringBuilder();
-            sb.AppendLine("# Alkana Conversion Results (Large Scale Test)");
+            sb.AppendLine("# Alkana Conversion Results (Legacy Version)");
             sb.AppendLine();
-            sb.AppendLine("This document shows the results of a large-scale conversion test using the Alkana dataset (1,000 words).");
+            sb.AppendLine("This document shows the results of a large-scale conversion test using the legacy Alkana algorithm (commit: e4b4f70, 1,000 words).");
             sb.AppendLine();
             sb.AppendLine("## Summary");
             sb.AppendLine($"- **Total Cases**: {total}");
