@@ -81,6 +81,7 @@ bep-eng.dic から抽出された英単語を用いた大規模な変換テス�
 - [英語の発音をカタカナで表す方法](https://www.sljfaq.org/afaq/english-in-japanese.ja.html)
 - [IPA表記 (Wikipedia)](https://en.wikipedia.org/wiki/International_Phonetic_Alphabet)
 - [alkana.py の data.py](https://github.com/zomysan/alkana.py/blob/master/alkana/data.py)
+- [English to Katakana transcription](https://github.com/yokolet/transcript)
 - [WaniKani Japanese Phonoogy Chart](https://community.wanikani.com/t/japanese-phonology-chart-with-ipa/48255)
 - [Katakana in IPA Notation](https://syllabary.sourceforge.net/Katakana/Katakana.html)
 - [【python】機械学習ベースの英語-カタカナ変換ライブラリの比較](https://qiita.com/shimajiroxyz/items/a509acf5a188fc8002c2)
